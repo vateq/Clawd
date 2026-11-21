@@ -1,46 +1,41 @@
 # Clawd 🧡
 
-A tiny desktop Claude companion: a friendly floating mascot, speech bubble, and background task runner.
+A desktop Claude companion for background tasks and Model Context Protocol (MCP) stdio servers. Local UI, task history, and a friendly speech bubble.
 
-> Early MVP: chat/task execution through the Anthropic API is implemented. MCP integrations and live subscription usage tracking are planned, not yet implemented.
+**MVP features:** desktop task UI, Anthropic API tool loop, configurable MCP stdio servers, task history, CI syntax check.
 
-## Features
-- Floating desktop window with a mascot and speech bubble
-- Submit a task and keep the UI responsive while Claude works
-- Anthropic API integration
-- Configurable model and API key via environment variables
-- Optional manual usage-limit display (not connected to account usage data)
+## Install
+Python 3.10+ and an Anthropic API key are required.
 
-## Run
-1. Install Python 3.10+.
-2. `python -m pip install -r requirements.txt`
-3. Set `ANTHROPIC_API_KEY` in your environment.
-4. Run `python clawd.py`.
+```bash
+python -m pip install -r requirements.txt
+```
 
 Windows PowerShell:
 ```powershell
 $env:ANTHROPIC_API_KEY="your-key"
 python clawd.py
 ```
-
 macOS/Linux:
 ```bash
 export ANTHROPIC_API_KEY="your-key"
 python clawd.py
 ```
+Optional: set `ANTHROPIC_MODEL`. Default model: `claude-sonnet-4-5`.
 
-Set `ANTHROPIC_MODEL` to override the default model. Set `CLAWD_DAILY_REMAINING` and `CLAWD_WEEKLY_REMAINING` to show manually-entered usage text in the UI.
+## MCP
+Config is read from `~/.clawd/mcp_servers.json`. Copy `mcp_servers.example.json` there and configure a server you trust:
+```json
+{
+  "servers": [{"name":"sample","command":"npx","args":["-y","YOUR-TRUSTED-MCP-SERVER"],"env":{},"enabled":true}]
+}
+```
+Clawd launches configured MCP subprocesses locally for each task, discovers tools and exposes them to Claude. This implementation is experimental and server compatibility varies.
 
-## Roadmap
-- [ ] MCP client and server management
-- [ ] Native desktop notifications and tray integration
-- [ ] Animated mascot / idle states
-- [ ] Accurate usage tracking where officially supported
-- [ ] Task history and persistent queue
-- [ ] Windows/macOS/Linux packaging
+**Security warning:** There is no per-tool approval workflow or sandbox yet. MCP server commands run on your machine and tools can access or modify resources. Configure only trusted servers, use limited permissions, and avoid sensitive data. Prompt and tool results are sent to the Anthropic API. Task history is stored locally in `~/.clawd`.
 
-## Safety
-Clawd currently sends task text to the Anthropic API. Don't enter secrets or sensitive data unless you are comfortable sending them to the API. The MVP does not execute shell commands or access your files.
+## Not yet implemented
+Animated transparent desktop pet, approval prompts/permissions UI, cancellation and queue, native tray and notifications, subscription usage meter, installers and extensive tests.
 
 ## License
-MIT. See [LICENSE](LICENSE).
+MIT
