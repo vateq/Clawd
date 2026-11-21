@@ -38,3 +38,13 @@ Animated transparent desktop pet, approval prompts/permissions UI, cancellation 
 
 ## License
 MIT
+
+## Build a standalone app
+
+**Windows (quick build):** install Python 3.10+ then double-click `build_windows.bat`. The executable is created at `dist/Clawd.exe`. The first build downloads dependencies, so it may take longer than 10 seconds.
+
+**macOS/Linux:** run `bash build_unix.sh`. The output is in `dist/`.
+
+Alternatively, download the **Clawd-Windows** artifact from the latest successful Actions run on GitHub (Actions → Build Windows executable).
+
+The packaged app still requires your own Anthropic API key. MCP support is experimental; only configure servers you trust.
