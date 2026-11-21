@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
 jobs:
-  syntax:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,3 +11,4 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m py_compile clawd.py
+      - run: python -m unittest discover -s tests -v
