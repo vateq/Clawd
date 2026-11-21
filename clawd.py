@@ -57,7 +57,7 @@ class ClawdApp:
             answer = "".join(block.text for block in response.content if getattr(block, "type", None) == "text")
             self.root.after(0, lambda: self.done(answer or "Gotowe!"))
         except Exception as exc:
-            self.root.after(0, lambda: self.done(f"Ups, coś nie wyszło: {exc}"))
+            self.root.after(0, lambda error=str(exc): self.done(f"Ups, coś nie wyszło: {error}"))
 
     def done(self, text):
         self.bubble.config(text=text[:800])
