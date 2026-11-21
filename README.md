@@ -10,7 +10,6 @@ Python 3.10+ and an Anthropic API key are required.
 ```bash
 python -m pip install -r requirements.txt
 ```
-
 Windows PowerShell:
 ```powershell
 $env:ANTHROPIC_API_KEY="your-key"
